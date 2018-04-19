@@ -1,9 +1,12 @@
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
+
 public class Utils {
-	public static Image loadImage(String path) throws IOException {
-		return Toolkit.getDefaultToolkit().createImage("background.jpg");
+
+	public static ImageIcon loadImage(String path) throws IOException {
+		return new ImageIcon(path);
 	}
+
 }

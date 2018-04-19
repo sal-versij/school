@@ -17,14 +17,17 @@ public class Game {
 	public Game(Window window) {
 		this.window = window;
 		automatic = true;
+		window.outcomeLbl.setText("New game");
 		newGame();
 	}
 
 	public void newGame() {
 		player = true;
 		for (int i = 0; i < 3; i++)
-			for (int j = 0; j < 3; j++)
+			for (int j = 0; j < 3; j++) {
 				board[i][j] = N;
+				window.boardPnls[i][j].set(N);
+			}
 		running = true;
 	}
 
@@ -50,11 +53,11 @@ public class Game {
 			return;
 		board[x][y] = (player ? X : O);
 		window.boardPnls[x][y].set(board[x][y]);
-		player = !player;
-		check(x, y);
+		if (check(x, y))
+			player = !player;
 	}
 
-	public void check(int x, int y) {
+	public boolean check(int x, int y) {
 		int row = 0, col = 0, dia1 = 0, dia2 = 0, draw = 0;
 		for (int i = 0; i < 3; i++)
 			for (int j = 0; j < 3; j++)
@@ -70,10 +73,15 @@ public class Game {
 				} else if (board[i][j] == N) {
 					draw++;
 				}
-		if (row == 3 || col == 3 || dia1 == 3 || dia2 == 3)
-			endGame(!player);
-		else if (draw == 9)
+		if (row == 3 || col == 3 || dia1 == 3 || dia2 == 3) {
+			endGame(player);
+			return false;
+		}
+		if (draw == 0) {
 			endGame();
+			return false;
+		}
+		return true;
 	}
 
 	public void start() {

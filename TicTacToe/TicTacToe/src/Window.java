@@ -32,7 +32,7 @@ public class Window extends JFrame {
 		container = getContentPane();
 
 		optionsMnu.add(automaticMnu);
-		mb.add(optionsMnu);
+		fileMnu.add(optionsMnu);
 		fileMnu.add(newGameMnu);
 		mb.add(fileMnu);
 		helpMnu.add(aboutMnu);
@@ -42,7 +42,7 @@ public class Window extends JFrame {
 		mainPnl.setLayout(new GridLayout(3, 3));
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				boardPnls[i][j] = new boardPanel("TicTacToe/assets/X.png", "TicTacToe/assets/O.png");
+				boardPnls[i][j] = new boardPanel("assets/X.jpg", "assets/O.jpg");
 				boardPnls[i][j].setBorder(new Border(new Color(0, 0, 0)));
 				mainPnl.add(boardPnls[i][j]);
 			}
@@ -58,7 +58,7 @@ public class Window extends JFrame {
 		pack();
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBounds(0, 0, 200, 240);
+		setBounds(0, 0, 200, 250);
 	}
 
 	public void setOutcome(String str) {

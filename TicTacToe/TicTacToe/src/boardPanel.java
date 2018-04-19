@@ -1,13 +1,13 @@
 import java.awt.Graphics;
-import java.awt.Image;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class boardPanel extends JPanel {
 	private int state;
-	private Image imgX;
-	private Image imgO;
+	private ImageIcon imgX;
+	private ImageIcon imgO;
 
 	private static final int N = 0;
 	private static final int X = 1;
@@ -31,15 +31,16 @@ public class boardPanel extends JPanel {
 			g.clearRect(0, 0, getWidth(), getHeight());
 			break;
 		case X:
-			imgX.flush();
-			g.drawImage(imgX, 0, 0, null);
-			System.out.println(imgX);
-			System.out.println(imgX.getHeight(null));
-			System.out.println(imgX.getWidth(null));
+			drawImage(g, imgX);
 			break;
 		case O:
-			g.drawImage(imgO, 0, 0, null);
+			drawImage(g, imgO);
 			break;
 		}
+	}
+
+	private boolean drawImage(Graphics g, ImageIcon img) {
+		return g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), 0, 0, img.getIconWidth(), img.getIconHeight(),
+				img.getImageObserver());
 	}
 }
