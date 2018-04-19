@@ -42,7 +42,7 @@ public class Window extends JFrame {
 		mainPnl.setLayout(new GridLayout(3, 3));
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				boardPnls[i][j] = new boardPanel("assets/X.jpg", "assets/O.jpg");
+				boardPnls[i][j] = new boardPanel("assets/X.png", "assets/O.png");
 				boardPnls[i][j].setBorder(new Border(new Color(0, 0, 0)));
 				mainPnl.add(boardPnls[i][j]);
 			}
