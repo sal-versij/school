@@ -7,12 +7,14 @@ import javax.swing.JPanel;
 public class boardPanel extends JPanel {
 	private static final long serialVersionUID = 3068810476355153278L;
 
-	private int state;
+	protected int state;
+	protected ImageIcon imgN;
 	protected ImageIcon imgX;
 	protected ImageIcon imgO;
 
-	public boardPanel(String imgX, String imgO) throws IOException {
+	public boardPanel(String imgN, String imgX, String imgO) throws IOException {
 		state = Constants.N;
+		this.imgN = Utils.loadImage(imgN);
 		this.imgX = Utils.loadImage(imgX);
 		this.imgO = Utils.loadImage(imgO);
 	}
@@ -26,7 +28,7 @@ public class boardPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		switch (state) {
 		case Constants.N:
-			g.clearRect(0, 0, getWidth(), getHeight());
+			drawImage(g, imgN);
 			break;
 		case Constants.X:
 			drawImage(g, imgX);
