@@ -43,8 +43,7 @@ public class Window extends JFrame {
 		boardPnls = new boardPanel[Constants.H][Constants.W];
 		for (int i = 0; i < Constants.H; i++) {
 			for (int j = 0; j < Constants.W; j++) {
-				boardPnls[i][j] = new animatedBoardPanel("assets/N.png", "assets/X.png", "assets/O.png", Constants.tick,
-						Constants.nFrame);
+				boardPnls[i][j] = new boardPanel("assets/N.png", "assets/X.png", "assets/O.png");
 				// boardPnls[i][j].setBorder(new Border(new Color(0, 0, 0)));
 				mainPnl.add(boardPnls[i][j]);
 			}

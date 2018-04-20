@@ -47,37 +47,41 @@ public class Game {
 	public void insert(int y) {
 		if (board[0][y] != Constants.N)
 			return;
-		board[0][y] = (player ? Constants.X : Constants.O);
 		int x = 0;
 		try {
-			x = elaborate(y);
+			x = elaborate(y, (player ? Constants.X : Constants.O));
 		} catch (InterruptedException e) {
 			endGame();
 			return;
 		}
 		if (check(x, y))
+			endGame(player);
+		else
 			player = !player;
 	}
 
-	public int elaborate(int y) throws InterruptedException {
-		int x;
+	public int elaborate(int y, int player) throws InterruptedException {
+		int x = 0;
+		board[x][y] = player;
+		window.boardPnls[x][y].set(player);
 		for (x = 1; x < Constants.H; x++) {
 			if (board[x][y] == Constants.N) {
-				board[x][y] = board[x - 1][y];
 				board[x - 1][y] = Constants.N;
-				window.boardPnls[x - 1][y].set(board[x][y] * 2 + 1);
-				window.boardPnls[x][y].set(board[x][y] * 2);
-				Thread.sleep(Constants.tick * (Constants.nFrame + 1));
+				window.boardPnls[x - 1][y].set(Constants.N);
+
+				board[x][y] = player;
+				window.boardPnls[x][y].set(player);
+				Thread.sleep(Constants.tick);
 			} else
 				break;
 		}
-		return x - 1;
+		return x-1;
 	}
 
 	public boolean check(int x, int y) {
 		int row = 0, col = 0, diag1 = 0, diag2 = 0;
 		int i, j;
-		for (i = Math.max(0, y - 3); i < Math.min(Constants.W, y + 3); i++) {
+		for (i = Math.max(0, y - 3); i < Math.min(Constants.W, y + 4); i++) {
 			if (board[x][y] == board[x][i])
 				row++;
 			else
@@ -85,7 +89,7 @@ public class Game {
 			if (row == 4)
 				break;
 		}
-		for (i = Math.max(0, x - 3); i < Math.min(Constants.H, x + 3); i++) {
+		for (i = Math.max(0, x - 3); i < Math.min(Constants.H, x + 4); i++) {
 			if (board[x][y] == board[i][y])
 				col++;
 			else
@@ -93,8 +97,8 @@ public class Game {
 			if (col == 4)
 				break;
 		}
-		for (i = Math.max(0, x - 3); i < Math.min(Constants.H, x + 3); i++) {
-			for (j = Math.max(0, x - 3); j < Math.min(Constants.H, x + 3); j++) {
+		for (i = Math.max(0, x - 3); i < Math.min(Constants.H, x + 4); i++) {
+			for (j = Math.max(0, y - 3); j < Math.min(Constants.W, y + 4); j++) {
 				if ((i - j) != (x - y))
 					continue;
 				if (board[x][y] == board[i][j])
@@ -105,8 +109,8 @@ public class Game {
 					break;
 			}
 		}
-		for (i = Math.max(0, x - 3); i < Math.min(Constants.H, x + 3); i++) {
-			for (j = Math.max(0, x - 3); j < Math.min(Constants.H, x + 3); j++) {
+		for (i = Math.max(0, x - 3); i < Math.min(Constants.H, x + 4); i++) {
+			for (j = Math.max(0, y - 3); j < Math.min(Constants.W, y + 4); j++) {
 				if ((i + j) != (x + y))
 					continue;
 				if (board[x][y] == board[i][j])
@@ -119,8 +123,7 @@ public class Game {
 		}
 		if (row == 4 || col == 4 || diag1 == 4 || diag2 == 4)
 			return true;
-		else
-			return false;
+		return false;
 	}
 
 	public void start() {

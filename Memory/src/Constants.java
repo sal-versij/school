@@ -6,6 +6,5 @@ public interface Constants {
 
 	public static final int H = 6;
 	public static final int W = 7;
-	public static final int tick = 80;
-	public static final int nFrame = 18;
+	public static final int tick = 100;
 }
