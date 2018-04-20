@@ -1,68 +1,86 @@
+
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.io.IOException;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 public class Window extends JFrame {
+	private static final long serialVersionUID = 1L;
 
-	private JMenuBar mb = new JMenuBar();
+	private Container content;
+	private JMenuBar mnuBar = new JMenuBar();
 	private JMenu fileMnu = new JMenu("File");
+	private JMenuItem newMnuItm = new JMenuItem("New...");
+	private JMenuItem openMnuItm = new JMenuItem("Open...");
+	private JMenuItem saveMnuItm = new JMenuItem("Save...");
+	private JMenuItem saveAsMnuItm = new JMenuItem("Save as...");
 	private JMenu helpMnu = new JMenu("?");
-	public JMenuItem newGameMnu = new JMenuItem("New game");
-	public JMenuItem aboutMnu = new JMenuItem("About...");
-	private JMenu optionsMnu = new JMenu("Options");
-	public JMenuItem automaticMnu = new JMenuItem("Automatic");
-	private JPanel mainPnl = new JPanel();
-	public boardPanel[][] boardPnls;
-	private JPanel statPnl = new JPanel();
-	public JLabel outcomeLbl = new JLabel();
-	private Container container;
+	private JMenuItem preferencesMnuItm = new JMenuItem("preferences...");
+	private JMenuItem aboutMnuItm = new JMenuItem("about...");
+	private JPanel eastPnl = new JPanel();
+	private JPanel northPnl = new JPanel();
+	private JPanel westPnl = new JPanel();
+	private JPanel southPnl = new JPanel();
+	private JPanel centerPnl = new JPanel();
 
-	public Window(String title) throws IOException {
+	private Dimension size;
+
+	public Window(String title) {
 		super(title);
-		container = getContentPane();
 
-		optionsMnu.add(automaticMnu);
-		fileMnu.add(optionsMnu);
-		fileMnu.add(newGameMnu);
-		mb.add(fileMnu);
-		helpMnu.add(aboutMnu);
-		mb.add(helpMnu);
-		setJMenuBar(mb);
+		content = getContentPane();
 
-		mainPnl.setLayout(new GridLayout(Constants.H, Constants.W));
-		boardPnls = new boardPanel[Constants.H][Constants.W];
-		for (int i = 0; i < Constants.H; i++) {
-			for (int j = 0; j < Constants.W; j++) {
-				boardPnls[i][j] = new boardPanel("assets/N.png", "assets/X.png", "assets/O.png");
-				// boardPnls[i][j].setBorder(new Border(new Color(0, 0, 0)));
-				mainPnl.add(boardPnls[i][j]);
-			}
-		}
-		container.add(mainPnl, BorderLayout.CENTER);
+		content.add(eastPnl, BorderLayout.EAST);
+		content.add(northPnl, BorderLayout.NORTH);
+		content.add(westPnl, BorderLayout.WEST);
+		content.add(southPnl, BorderLayout.SOUTH);
 
-		statPnl.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 5));
-		statPnl.setBorder(new Border(new Color(52, 52, 52)));
+		centerPnl.setLayout(new GridLayout(1, 1));
+		content.add(centerPnl, BorderLayout.CENTER);
 
-		statPnl.add(outcomeLbl);
-		container.add(statPnl, BorderLayout.SOUTH);
+		fileMnu.add(newMnuItm);
+		fileMnu.add(openMnuItm);
+		fileMnu.add(saveMnuItm);
+		fileMnu.add(saveAsMnuItm);
+		mnuBar.add(fileMnu);
 
-		pack();
+		helpMnu.add(preferencesMnuItm);
+		helpMnu.addSeparator();
+		helpMnu.add(aboutMnuItm);
+		mnuBar.add(helpMnu);
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBounds(0, 0, 200, 250);
+		setJMenuBar(mnuBar);
+		size = Toolkit.getDefaultToolkit().getScreenSize();
+		size.height /= 2;
+		size.width /= 2;
+		setSize(size);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
 	}
 
-	public void setOutcome(String str) {
-		outcomeLbl.setText(str);
+	public void setCenterGrid(int width, int height) {
+		GridLayout a = (GridLayout) (centerPnl.getLayout());
+		a.setColumns(width);
+		a.setRows(height);
+	}
+
+	public void placeCards(ArrayList<Card> cards) {
+		centerPnl.removeAll();
+		int i = 0;
+		for (Iterator iterator = cards.iterator(); iterator.hasNext();) {
+			Card card = (Card) iterator.next();
+			card.setPosition(i++);
+			centerPnl.add(card);
+		}
+		pack();
 	}
 }
