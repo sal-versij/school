@@ -22,7 +22,7 @@ public class Window extends JFrame {
 	private JMenu optionsMnu = new JMenu("Options");
 	public JMenuItem automaticMnu = new JMenuItem("Automatic");
 	private JPanel mainPnl = new JPanel();
-	public boardPanel[][] boardPnls = new boardPanel[3][3];
+	public boardPanel[][] boardPnls;
 	private JPanel statPnl = new JPanel();
 	public JLabel outcomeLbl = new JLabel();
 	private Container container;
@@ -39,10 +39,11 @@ public class Window extends JFrame {
 		mb.add(helpMnu);
 		setJMenuBar(mb);
 
-		mainPnl.setLayout(new GridLayout(3, 3));
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				boardPnls[i][j] = new boardPanel("assets/X.png", "assets/O.png");
+		mainPnl.setLayout(new GridLayout(Constants.H, Constants.W));
+		boardPnls = new boardPanel[Constants.H][Constants.W];
+		for (int i = 0; i < Constants.H; i++) {
+			for (int j = 0; j < Constants.W; j++) {
+				boardPnls[i][j] = new animatedBoardPanel("assets/X.png", "assets/O.png", 50, 20);
 				boardPnls[i][j].setBorder(new Border(new Color(0, 0, 0)));
 				mainPnl.add(boardPnls[i][j]);
 			}

@@ -5,42 +5,40 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class boardPanel extends JPanel {
-	private int state;
-	private ImageIcon imgX;
-	private ImageIcon imgO;
+	private static final long serialVersionUID = 3068810476355153278L;
 
-	private static final int N = 0;
-	private static final int X = 1;
-	private static final int O = 2;
+	private int state;
+	protected ImageIcon imgX;
+	protected ImageIcon imgO;
 
 	public boardPanel(String imgX, String imgO) throws IOException {
-		state = N;
+		state = Constants.N;
 		this.imgX = Utils.loadImage(imgX);
 		this.imgO = Utils.loadImage(imgO);
 	}
 
 	public void set(int v) {
 		state = v;
-		setToolTipText("§" + v);
+		setToolTipText("@" + v);
 		repaint();
 	}
 
 	public void paintComponent(Graphics g) {
 		switch (state) {
-		case N:
+		case Constants.N:
 			g.clearRect(0, 0, getWidth(), getHeight());
 			break;
-		case X:
+		case Constants.X:
 			drawImage(g, imgX);
 			break;
-		case O:
+		case Constants.O:
 			drawImage(g, imgO);
 			break;
 		}
 	}
 
-	private boolean drawImage(Graphics g, ImageIcon img) {
-		return g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), 0, 0, img.getIconWidth(), img.getIconHeight(),
+	protected void drawImage(Graphics g, ImageIcon img) {
+		g.drawImage(img.getImage(), 0, 0, getWidth(), getHeight(), 0, 0, img.getIconWidth(), img.getIconHeight(),
 				img.getImageObserver());
 	}
 }

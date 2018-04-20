@@ -10,10 +10,6 @@ public class Game {
 	private boolean automatic;
 	private boolean running;
 
-	private static final int N = 0;
-	private static final int X = 1;
-	private static final int O = 2;
-
 	public Game(Window window) {
 		this.window = window;
 		automatic = true;
@@ -25,8 +21,8 @@ public class Game {
 		player = true;
 		for (int i = 0; i < 3; i++)
 			for (int j = 0; j < 3; j++) {
-				board[i][j] = N;
-				window.boardPnls[i][j].set(N);
+				board[i][j] = Constants.N;
+				window.boardPnls[i][j].set(Constants.N);
 			}
 		running = true;
 	}
@@ -49,9 +45,9 @@ public class Game {
 	}
 
 	public void insert(int x, int y) {
-		if (board[x][y] != N)
+		if (board[x][y] != Constants.N)
 			return;
-		board[x][y] = (player ? X : O);
+		board[x][y] = (player ? Constants.X : Constants.O);
 		window.boardPnls[x][y].set(board[x][y]);
 		if (check(x, y))
 			player = !player;
@@ -70,7 +66,7 @@ public class Game {
 						dia1++;
 					if ((i - j) == (x - y))
 						dia2++;
-				} else if (board[i][j] == N) {
+				} else if (board[i][j] == Constants.N) {
 					draw++;
 				}
 		if (row == 3 || col == 3 || dia1 == 3 || dia2 == 3) {
