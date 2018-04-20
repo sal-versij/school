@@ -21,7 +21,7 @@ public class boardPanel extends JPanel {
 
 	public void set(int v) {
 		state = v;
-		setToolTipText("ยง" + v);
+		setToolTipText("ง" + v);
 		repaint();
 	}
 
