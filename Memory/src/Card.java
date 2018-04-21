@@ -13,13 +13,12 @@ public class Card extends JPanel {
 	public int value;
 	// private Image bgImg;
 	private JLabel valueLbl;
-	private Game parent;
 	private int position;
 	private MouseListener ML;
+	private boolean lock = false;
 
 	public Card(Game parent, int value/* , String image */) throws IOException {
 		super();
-		this.parent = parent;
 		this.value = value;
 		// bgImg = ImageIO.read(new File(image));
 		valueLbl = new JLabel(String.valueOf(value));
@@ -34,6 +33,8 @@ public class Card extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				System.out.println(position);
+				parent.selectCard(position);
 			}
 
 			@Override
@@ -46,15 +47,13 @@ public class Card extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(position);
-				parent.selectCard(position);
 			}
 		};
 		addMouseListener(ML);
 	}
 
 	public void show(boolean b) {
-		valueLbl.setVisible(b);
+		valueLbl.setVisible(b || lock);
 	}
 
 	public void setPosition(int i) {
@@ -63,6 +62,7 @@ public class Card extends JPanel {
 
 	public void lock() {
 		removeMouseListener(ML);
+		lock = true;
 	}
 
 	// public void paintComponent(Graphics g) {

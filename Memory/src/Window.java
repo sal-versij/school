@@ -1,9 +1,7 @@
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -32,8 +30,6 @@ public class Window extends JFrame {
 	private JPanel southPnl = new JPanel();
 	private JPanel centerPnl = new JPanel();
 
-	private Dimension size;
-
 	public Window(String title) {
 		super(title);
 
@@ -59,12 +55,12 @@ public class Window extends JFrame {
 		mnuBar.add(helpMnu);
 
 		setJMenuBar(mnuBar);
-		size = Toolkit.getDefaultToolkit().getScreenSize();
-		size.height /= 2;
-		size.width /= 2;
-		setSize(size);
+
+		pack();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		setSize(300, 300);
 	}
 
 	public void setCenterGrid(int width, int height) {
@@ -76,7 +72,7 @@ public class Window extends JFrame {
 	public void placeCards(ArrayList<Card> cards) {
 		centerPnl.removeAll();
 		int i = 0;
-		for (Iterator iterator = cards.iterator(); iterator.hasNext();) {
+		for (Iterator<Card> iterator = cards.iterator(); iterator.hasNext();) {
 			Card card = (Card) iterator.next();
 			card.setPosition(i++);
 			centerPnl.add(card);
