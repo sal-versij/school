@@ -60,7 +60,7 @@ public class Window extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		setSize(300, 300);
+		setSize(600, 600);
 	}
 
 	public void setCenterGrid(int width, int height) {
