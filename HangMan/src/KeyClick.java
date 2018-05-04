@@ -15,7 +15,7 @@ public class KeyClick extends MouseAdapter {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		_k.disable();
 		_i.playChar(_c);
-		_k.removeMouseListener(this);
 	}
 }
